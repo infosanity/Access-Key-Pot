@@ -30,13 +30,13 @@ EOF
 }
 
 resource "aws_cloudwatch_log_metric_filter" "honeyuser-metric" {
-  name = "HoneyUser_activity"
-  pattern = "{ $.userIdentity.accessKeyId = \"${aws_iam_access_key.honeyuser_key.id}\" }"
+  name = "HoneyUser_Activity"
+  pattern = "{ $.userIdentity.accessKeyId = ${aws_iam_access_key.honeyuser_key.id} }"
   log_group_name = data.aws_cloudwatch_log_group.cloudtrail_logs.name
 
   metric_transformation {
-    name = "honeypot_metric"
-    namespace = "HoneyTokens"
+    name = "HoneyUser_Activity"
+    namespace = "HoneyTokens-tf"
     value = "1"
   }
 }
@@ -46,12 +46,12 @@ resource "aws_cloudwatch_metric_alarm" "honeyuser-activity" {
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods = "2"
   metric_name = aws_cloudwatch_log_metric_filter.honeyuser-metric.name
-  namespace = "HoneyTokens"
-  period = "300"
+  namespace = "HoneyTokens-tf"
+  period = "60"
   statistic = "Sum"
-  threshold = "1"
+  threshold = "0"
   alarm_description = "Malicious activity from honey user"
   alarm_actions = [aws_sns_topic.honeypot-notifications.arn]
   treat_missing_data = "notBreaching"
-
+  datapoints_to_alarm = 1
 }
