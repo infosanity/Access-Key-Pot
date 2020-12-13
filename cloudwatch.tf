@@ -7,6 +7,7 @@ data "aws_cloudwatch_log_group" "cloudtrail_logs" {
 }
 
 resource "aws_sns_topic" "honeypot-notifications" {
+  #tfsec:ignore:AWS016 - SNS topic encryption beyond scope of demo deployment
   name            = "honeypotAlarmsTopic"
   delivery_policy = <<EOF
 {
