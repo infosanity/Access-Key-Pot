@@ -7,7 +7,7 @@ resource "aws_iam_user" "honeyuser" {
 
 resource "aws_iam_user_policy" "honeyuser_policy" {
   name = "explicit_deny"
-  user = "${aws_iam_user.honeyuser.name}"
+  user = aws_iam_user.honeyuser.name
 
   policy = <<POLICY
 {
@@ -24,13 +24,13 @@ POLICY
 }
 
 resource "aws_iam_access_key" "honeyuser_key" {
-  user = "${aws_iam_user.honeyuser.name}"
+  user = aws_iam_user.honeyuser.name
 }
 
 output "secret" {
-  value = "${aws_iam_access_key.honeyuser_key.secret}"
+  value = aws_iam_access_key.honeyuser_key.secret
 }
 
 output "key" {
-  value = "${aws_iam_access_key.honeyuser_key.id}"
+  value = aws_iam_access_key.honeyuser_key.id
 }
