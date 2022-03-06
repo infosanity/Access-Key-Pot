@@ -2,6 +2,10 @@ variable "cloudtrail_logs" {
   type = string
 }
 
+variable "alert_email" {
+  type = string
+}
+
 data "aws_cloudwatch_log_group" "cloudtrail_logs" {
   name = var.cloudtrail_logs
 }
@@ -55,4 +59,10 @@ resource "aws_cloudwatch_metric_alarm" "honeyuser-activity" {
   alarm_actions       = [aws_sns_topic.honeypot-notifications.arn]
   treat_missing_data  = "notBreaching"
   datapoints_to_alarm = 1
+}
+
+resource "aws_sns_topic_subscription" "honeytoken_trigger" {
+  topic_arn = aws_sns_topic.honeypot-notifications.arn
+  protocol  = "email"
+  endpoint  = var.alert_email
 }
