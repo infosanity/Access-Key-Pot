@@ -1,4 +1,6 @@
 *.tfstate*
 .terraform/
+.terraform*
 provider.tf
-terraform.tfvars
+terraform.auto.tfvars
+terraform.tf

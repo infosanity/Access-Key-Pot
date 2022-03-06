@@ -27,8 +27,13 @@ resource "aws_iam_access_key" "honeyuser_key" {
   user = aws_iam_user.honeyuser.name
 }
 
+output "display_secret"{
+  value = "terraform output secret"
+}
+
 output "secret" {
-  value = aws_iam_access_key.honeyuser_key.secret
+  value     = aws_iam_access_key.honeyuser_key.secret
+  sensitive = true
 }
 
 output "key" {
