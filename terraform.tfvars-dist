@@ -1,1 +1,4 @@
 cloudtrail_logs = "YOUR CLOUDTRAIL LOG GROUP HERE"
+
+# WARNING: If you forget to change to your email, I may get nosey and accept the alert subscription.....
+alert_email     = "access-key-pot@infosanity.co.uk"
