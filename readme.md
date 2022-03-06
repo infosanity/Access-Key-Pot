@@ -57,6 +57,8 @@ If all successful, terraform should return your deception token(s) at the end of
     key = "AKIA<redacted>"
     secret = "<redacted>"
 
+Terraform redact's sensitive values automatically. It's a good failsafe, but not appropriate for our needs as the key is already neutered. As the output "display_secret" suggest, run the command _terraform output secret_ to force Terraform to spit the secret key from it's State file. 
+
 ## Testing
 After deployment, any activity should raise the CloudWatch metric over it's threshold, pushing it into an alarm state.
 
